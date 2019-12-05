@@ -11,11 +11,11 @@ public class Article {
 
 	private String title;
 	private String link;
-	private int rank;
-	private int score;
+	private Integer rank;
+	private Integer score;
 	private Author author;
 	private String age;
-	private int commentCount;
+	private Integer commentCount;
 	private String source;
 
 	/**
@@ -49,28 +49,28 @@ public class Article {
 	/**
 	 * @return the rank
 	 */
-	public int getRank() {
+	public Integer getRank() {
 		return rank;
 	}
 
 	/**
 	 * @param rank the rank to set
 	 */
-	public void setRank(int rank) {
+	public void setRank(Integer rank) {
 		this.rank = rank;
 	}
 
 	/**
 	 * @return the score
 	 */
-	public int getScore() {
+	public Integer getScore() {
 		return score;
 	}
 
 	/**
 	 * @param score the score to set
 	 */
-	public void setScore(int score) {
+	public void setScore(Integer score) {
 		this.score = score;
 	}
 
@@ -105,14 +105,14 @@ public class Article {
 	/**
 	 * @return the commentCount
 	 */
-	public int getCommentCount() {
+	public Integer getCommentCount() {
 		return commentCount;
 	}
 
 	/**
 	 * @param commentCount the commentCount to set
 	 */
-	public void setCommentCount(int commentCount) {
+	public void setCommentCount(Integer commentCount) {
 		this.commentCount = commentCount;
 	}
 
