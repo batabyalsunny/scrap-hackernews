@@ -129,4 +129,10 @@ public class Article {
 	public void setSource(String source) {
 		this.source = source;
 	}
+
+	@Override
+	public String toString() {
+		return "Article [title=" + title + ", link=" + link + ", rank=" + rank + ", score=" + score + ", author="
+				+ author + ", age=" + age + ", commentCount=" + commentCount + ", source=" + source + "]";
+	}
 }
