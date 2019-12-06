@@ -13,7 +13,7 @@ public class Author {
 
 	private String userName;
 	private Date createdAt;
-	private int karma;
+	private Integer karma;
 	private String about;
 
 	/**
@@ -47,14 +47,14 @@ public class Author {
 	/**
 	 * @return the karma
 	 */
-	public int getKarma() {
+	public Integer getKarma() {
 		return karma;
 	}
 
 	/**
 	 * @param karma the karma to set
 	 */
-	public void setKarma(int karma) {
+	public void setKarma(Integer karma) {
 		this.karma = karma;
 	}
 

@@ -4,6 +4,7 @@
 package ml.bootcode;
 
 import java.io.IOException;
+import java.text.ParseException;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
@@ -38,7 +39,7 @@ public class ScrapHackernewsApp {
 			// Check the first argument flag.
 			switch (args[0]) {
 			case "-a":
-				app.listAuthors();
+				app.listAuthors(articles);
 				break;
 
 			case "-s":
@@ -50,7 +51,7 @@ public class ScrapHackernewsApp {
 				break;
 			}
 
-		} catch (IOException e) {
+		} catch (IOException | ParseException e) {
 			System.out.println("Unable to reach " + URL);
 			e.printStackTrace();
 		}
@@ -59,7 +60,18 @@ public class ScrapHackernewsApp {
 	/**
 	 * Prints out user name and his Karma points from top page of.
 	 */
-	public void listAuthors() {
+	public void listAuthors(List<Article> articles) {
+
+		System.out.println("All authors and their karma points");
+		System.out.println("====================================\n");
+
+		// Print
+		Iterator<Article> it = articles.iterator();
+		while (it.hasNext()) {
+			Article article = it.next();
+			System.out.println("Author: " + article.getAuthor().getUserName());
+			System.out.println("Karma Point: " + article.getAuthor().getKarma() + "\n");
+		}
 	}
 
 	/**

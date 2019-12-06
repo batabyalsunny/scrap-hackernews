@@ -9,6 +9,7 @@ import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -50,8 +51,9 @@ public class ArticleListScraper {
 	 * 
 	 * @return
 	 * @throws IOException
+	 * @throws ParseException
 	 */
-	public List<Article> scrap() throws IOException {
+	public List<Article> scrap() throws IOException, ParseException {
 
 		// Regular expression to scrap the whole page.
 		String regex = RANK_REGX + SKIP_CHARS_REGX + LINK_REGX + SKIP_CHARS_REGX + TITLE_REGX + SKIP_CHARS_REGX
@@ -78,10 +80,11 @@ public class ArticleListScraper {
 		while (matcher.find()) {
 
 			// Get the author URL first.
-			String authorUrl = matcher.group("authorUrl");
+			String authorUrl = url.toString() + matcher.group("authorUrl");
 
 			// Scrap the author details.
-			Author author = new Author();
+			AuthorProfileScraper authorScraper = new AuthorProfileScraper(authorUrl);
+			Author author = authorScraper.scrap();
 
 			// Prepare the article object.
 			Article article = new Article();
