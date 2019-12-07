@@ -3,16 +3,15 @@
  */
 package ml.bootcode.entities;
 
-import java.util.Date;
-
 /**
+ * Author.
+ * 
  * @author sunnyb
  *
  */
 public class Author {
 
 	private String userName;
-	private Date createdAt;
 	private Integer karma;
 	private String about;
 
@@ -28,20 +27,6 @@ public class Author {
 	 */
 	public void setUserName(String userName) {
 		this.userName = userName;
-	}
-
-	/**
-	 * @return the createdAt
-	 */
-	public Date getCreatedAt() {
-		return createdAt;
-	}
-
-	/**
-	 * @param createdAt the createdAt to set
-	 */
-	public void setCreatedAt(Date createdAt) {
-		this.createdAt = createdAt;
 	}
 
 	/**

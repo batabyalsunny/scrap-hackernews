@@ -14,6 +14,8 @@ import java.util.stream.Collectors;
 import ml.bootcode.entities.Author;
 
 /**
+ * Scraper for author profile page.
+ * 
  * @author sunnyb
  *
  */
@@ -22,14 +24,10 @@ public class AuthorProfileScraper {
 	// Regular expression rules to scrap.
 	private final static String SKIP_CHARS_REGX = ".*?";
 	private final static String USERNAME_REGX = "class=\"hnuser\">(?<userName>.*?)</a>";
-	private final static String CREATED_AT_REGX = "created:" + SKIP_CHARS_REGX + "<a" + SKIP_CHARS_REGX
-			+ ">(?<createdAt>.+?)</a>";
 	private final static String KARMA_REGX = "karma:" + SKIP_CHARS_REGX + "<td>(?<karma>.+?)</td>";
 	private final static String ABOUT_REGX = "about:" + SKIP_CHARS_REGX + "<td>(?<about>.+?)</td>";
 
-	// Date format.
-	private final static String DEFAULT_DATE_FORMAT = "MMMM dd, yyyy";
-
+	// Page URL.
 	private URL url;
 
 	/**
@@ -41,6 +39,7 @@ public class AuthorProfileScraper {
 	}
 
 	/**
+	 * Scraps the page.
 	 * 
 	 * @return
 	 * @throws IOException
@@ -49,8 +48,7 @@ public class AuthorProfileScraper {
 	public Author scrap() throws IOException, ParseException {
 
 		// Regular expression to scrap the author page.
-		String regex = USERNAME_REGX + SKIP_CHARS_REGX + CREATED_AT_REGX + SKIP_CHARS_REGX + KARMA_REGX
-				+ SKIP_CHARS_REGX + ABOUT_REGX;
+		String regex = USERNAME_REGX + SKIP_CHARS_REGX + KARMA_REGX + SKIP_CHARS_REGX + ABOUT_REGX;
 
 		// Open the url connection.
 		URLConnection con = url.openConnection();
@@ -71,7 +69,6 @@ public class AuthorProfileScraper {
 		// If match found.
 		if (matcher.find()) {
 			author.setUserName(matcher.group("userName"));
-//			author.setCreatedAt(new SimpleDateFormat(DEFAULT_DATE_FORMAT).parse(matcher.group("createdAt")));
 			author.setKarma(Integer.parseInt(matcher.group("karma").trim()));
 			author.setAbout(matcher.group("about"));
 		}

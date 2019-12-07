@@ -20,6 +20,8 @@ import ml.bootcode.entities.Article;
 import ml.bootcode.entities.Author;
 
 /**
+ * Scraper for the article list.
+ * 
  * @author sunnyb
  *
  */
@@ -37,6 +39,7 @@ public class ArticleListScraper {
 	private final static String COMMENT_COUNT_REGX = "\\|" + SKIP_CHARS_REGX + "\\|" + SKIP_CHARS_REGX
 			+ ">(?<commentCount>.*?)(&nbsp;comments|&nbsp;comment|discuss)</a>";
 
+	// Page URL.
 	private URL url;
 
 	/**
@@ -48,12 +51,14 @@ public class ArticleListScraper {
 	}
 
 	/**
+	 * Scraps the page.
 	 * 
-	 * @return
+	 * @param withAuthor Whether to scrap authors also or not.
+	 * @return List of articles.
 	 * @throws IOException
 	 * @throws ParseException
 	 */
-	public List<Article> scrap() throws IOException, ParseException {
+	public List<Article> scrap(Boolean withAuthor) throws IOException, ParseException {
 
 		// Regular expression to scrap the whole page.
 		String regex = RANK_REGX + SKIP_CHARS_REGX + LINK_REGX + SKIP_CHARS_REGX + TITLE_REGX + SKIP_CHARS_REGX
@@ -79,12 +84,26 @@ public class ArticleListScraper {
 		// Loop through the matches.
 		while (matcher.find()) {
 
-			// Get the author URL first.
-			String authorUrl = url.toString() + matcher.group("authorUrl");
+			Author author = null;
 
-			// Scrap the author details.
-			AuthorProfileScraper authorScraper = new AuthorProfileScraper(authorUrl);
-			Author author = authorScraper.scrap();
+			// If with author then only scrap authors page.
+			if (withAuthor) {
+
+				// Get the author URL first.
+				String authorUrl = url.toString() + matcher.group("authorUrl");
+
+				// Scrap the author details.
+				AuthorProfileScraper authorScraper = new AuthorProfileScraper(authorUrl);
+				author = authorScraper.scrap();
+			}
+
+			// Comment count.
+			Integer commentCount = 0;
+
+			// if comment count is non empty string parse to int.
+			if (matcher.group("commentCount") != null && !matcher.group("commentCount").isEmpty()) {
+				commentCount = Integer.parseInt(matcher.group("commentCount"));
+			}
 
 			// Prepare the article object.
 			Article article = new Article();
@@ -94,7 +113,7 @@ public class ArticleListScraper {
 			article.setScore(Integer.parseInt(matcher.group("score")));
 			article.setAuthor(author);
 			article.setAge(matcher.group("age"));
-			article.setCommentCount(Integer.parseInt(matcher.group("commentCount")));
+			article.setCommentCount(commentCount);
 			article.setSource(matcher.group("source"));
 
 			articles.add(article);
